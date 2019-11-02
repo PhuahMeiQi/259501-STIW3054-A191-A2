@@ -44,8 +44,8 @@ public class scrapeGitHub {
 
     }
 
-    public static LinkedList<app> findAll() throws IOException, JSONException{
-        LinkedList<app> app = new LinkedList<app>();
+    public static LinkedList<data> findAll() throws IOException, JSONException{
+        LinkedList<data> data = new LinkedList<data>();
 
         int total = 0;
         int totalRepo = 0;
@@ -81,10 +81,10 @@ public class scrapeGitHub {
                 jsonObject3.optString("name");
             }
 
-            app.add(new app(follower,totalRepo,total,trying,URL));
+            data.add(new data(follower,totalRepo,total,trying,URL));
         }
 
-        return app;
+        return data;
     }
     public static void main(String[] args) {
         scrapeData t1 = new scrapeData();
