@@ -79,13 +79,15 @@ public class scrapeGitHub {
                 total = 1 + a++;
             }
 
-            for (int b = 0; b<jsonArray2.length();b++){
+            for (int b = 0; b<jsonArray2.length(); b++)
+            {
                 JSONObject jsonObject2 = jsonArray2.getJSONObject(b);
                 jsonObject2.optString("id");
                 totalRepo = 1 + b++;
             }
 
-            for (int c = 0; c<jsonArray1.length();c++){
+
+            for (int c = 0; c<jsonArray3.length();c++){
                 JSONObject jsonObject3 = jsonArray3.getJSONObject(c);
                 jsonObject3.optString("name");
             }
