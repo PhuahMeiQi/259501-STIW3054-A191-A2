@@ -19,7 +19,14 @@ class scrapeData extends Thread {
 }
 
 
+
 public class scrapeGitHub {
+    //URLConnection conn = url.openConnection();
+    //conn.setRequestProperty("User-Agent","Mozilla/5.0");
+    //HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        //connection.connect();
+
+
 
     private static String full (Reader reader) throws IOException{
         StringBuilder stringBuilder = new StringBuilder();
@@ -34,6 +41,8 @@ public class scrapeGitHub {
     public static JSONArray readUrl (String url) throws IOException, JSONException {
         InputStream inputStream = new URL(url).openStream();
         try{
+            //HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            //connection.connect();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String text = full(reader);
             JSONArray jsonArray = new JSONArray(text);
@@ -86,7 +95,7 @@ public class scrapeGitHub {
 
         return data;
     }
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         scrapeData t1 = new scrapeData();
         scrapeData t2 = new scrapeData();
         System.out.println("testing");
@@ -94,5 +103,5 @@ public class scrapeGitHub {
 
         t1.start();
         t2.start();
-    }
+    }*/
 }
