@@ -25,6 +25,9 @@ public class scrapeGitHub {
     public static JSONArray readUrl(String url) throws IOException, JSONException {
         InputStream inputStream = new URL(url).openStream();
         try {
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("| %-5s| %-20s| %-20s| %-20s| %-20s| %-20s\n","No","Follower Name","Total Repo","Total Follower","Total Following","GitHub Link");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String text = full(reader);
             JSONArray jsonArray = new JSONArray(text);
@@ -79,7 +82,13 @@ public class scrapeGitHub {
             String githubLink = jsonObject1.optString("html_url");
 
             Thread thread = new Thread(() -> {
-                System.out.println("t-"+Thread.currentThread().getId()+" "+login + " " + t_Repo + " " + t_Followers + " " + t_Following + " " + githubLink);
+                //System.out.println("t-"+Thread.currentThread().getId()+" "+login + " " + t_Repo + " " + t_Followers + " " + t_Following + " " + githubLink);
+                System.out.printf("| %-5s",Thread.currentThread().getId()+"\n");
+                System.out.printf("| %-30s",login);
+                System.out.printf("| %-20s",t_Repo);
+                System.out.printf("| %-20s",t_Followers);
+                System.out.printf("| %-20s",t_Following);
+                System.out.printf("| %-20s",githubLink+"\n");
                 data.add(new data(login, t_Repo, t_Followers, t_Following, githubLink));
             });
 
