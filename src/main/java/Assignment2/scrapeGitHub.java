@@ -12,13 +12,6 @@ import java.util.LinkedList;
 
 
 public class scrapeGitHub {
-
-    //URLConnection conn = url.openConnection();
-    //conn.setRequestProperty("User-Agent","Mozilla/5.0");
-    //HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-    //connection.connect();
-
-
     private static String full(Reader reader) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         int cp;
@@ -32,8 +25,6 @@ public class scrapeGitHub {
     public static JSONArray readUrl(String url) throws IOException, JSONException {
         InputStream inputStream = new URL(url).openStream();
         try {
-            //HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            //connection.connect();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String text = full(reader);
             JSONArray jsonArray = new JSONArray(text);
@@ -41,14 +32,11 @@ public class scrapeGitHub {
         } finally {
             inputStream.close();
         }
-
     }
 
     public static JSONObject readOneUrl(String url) throws IOException, JSONException {
         InputStream inputStream = new URL(url).openStream();
         try {
-            //HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            //connection.connect();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String text = full(reader);
             JSONObject json = new JSONObject(text);
