@@ -10,100 +10,103 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.LinkedList;
 
-class scrapeData extends Thread {
-
-    public void run() {
-        System.out.println("info");
-    }
-
-}
-
-
 
 public class scrapeGitHub {
+
     //URLConnection conn = url.openConnection();
     //conn.setRequestProperty("User-Agent","Mozilla/5.0");
     //HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-        //connection.connect();
+    //connection.connect();
 
 
-
-    private static String full (Reader reader) throws IOException{
+    private static String full(Reader reader) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         int cp;
 
-        while ((cp = reader.read()) != -1){
+        while ((cp = reader.read()) != -1) {
             stringBuilder.append((char) cp);
         }
         return stringBuilder.toString();
     }
 
-    public static JSONArray readUrl (String url) throws IOException, JSONException {
+    public static JSONArray readUrl(String url) throws IOException, JSONException {
         InputStream inputStream = new URL(url).openStream();
-        try{
+        try {
             //HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             //connection.connect();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String text = full(reader);
             JSONArray jsonArray = new JSONArray(text);
             return jsonArray;
-        }finally {
+        } finally {
             inputStream.close();
         }
 
     }
 
-    public static LinkedList<data> findAll() throws IOException, JSONException{
-        LinkedList<data> data = new LinkedList<data>();
+    public static JSONObject readOneUrl(String url) throws IOException, JSONException {
+        InputStream inputStream = new URL(url).openStream();
+        try {
+            //HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            //connection.connect();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+            String text = full(reader);
+            JSONObject json = new JSONObject(text);
+            return json;
+        } finally {
+            inputStream.close();
+        }
 
+    }
+
+    public static LinkedList<data> findAll() throws IOException, JSONException {
         int total = 0;
         int totalRepo = 0;
         String trying = null;
+        LinkedList<data> data = new LinkedList<data>();
 
-        JSONArray jsonArray = readUrl("https://api.github.com/users/PhuahMeiQi/followers");
+        JSONArray jsonArray = readUrl("https://api.github.com/users/zhamri/followers");
 
-        for (int i = 0; i<jsonArray.length();i++){
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            String follower = jsonObject.optString("login");
-            String link = jsonObject.optString("followers_url");
-            String repo = jsonObject.optString("repos_url");
-            String following = jsonObject.optString("subscriptions_url");
-            String URL = jsonObject.optString("html_url");
-            JSONArray jsonArray1 = readUrl(link);
-            JSONArray jsonArray2 = readUrl(repo);
-            JSONArray jsonArray3 = readUrl(following);
+        int length = 0;
 
-            for (int a = 0; a<jsonArray1.length();a++){
-                JSONObject jsonObject1 = jsonArray1.getJSONObject(a);
-                jsonObject1.optString("login");
-                total = 1 + a++;
-            }
-
-            for (int b = 0; b<jsonArray2.length(); b++)
-            {
-                JSONObject jsonObject2 = jsonArray2.getJSONObject(b);
-                jsonObject2.optString("id");
-                totalRepo = 1 + b++;
-            }
-
-
-            for (int c = 0; c<jsonArray3.length();c++){
-                JSONObject jsonObject3 = jsonArray3.getJSONObject(c);
-                jsonObject3.optString("name");
-            }
-
-            data.add(new data(follower,totalRepo,total,trying,URL));
+        if(jsonArray.length() > 30){
+             length = 30;
+        }else {
+            length = jsonArray.length();
         }
+
+        for (int i = 0; i < length; i++) {
+
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+            String link = jsonObject.optString("url");
+
+            JSONObject jsonObject1 = readOneUrl(link);
+
+
+            String login = jsonObject1.optString("login");
+            String t_Repo = jsonObject1.optString("public_repos");
+            String t_Followers = jsonObject1.optString("followers");
+            String t_Following = jsonObject1.optString("following");
+            String githubLink = jsonObject1.optString("html_url");
+
+            Thread thread = new Thread(() -> {
+                System.out.println("t-"+Thread.currentThread().getId()+" "+login + " " + t_Repo + " " + t_Followers + " " + t_Following + " " + githubLink);
+                data.add(new data(login, t_Repo, t_Followers, t_Following, githubLink));
+            });
+
+            thread.start();
+
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
 
         return data;
     }
-   /* public static void main(String[] args) {
-        scrapeData t1 = new scrapeData();
-        scrapeData t2 = new scrapeData();
-        System.out.println("testing");
-
-
-        t1.start();
-        t2.start();
-    }*/
 }
+

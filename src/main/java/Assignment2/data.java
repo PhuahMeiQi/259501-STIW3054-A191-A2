@@ -2,12 +2,12 @@ package Assignment2;
 
 public class data {
     private String follower;
-    private int totalRepo;
-    private int total;
+    private String  totalRepo;
+    private String total;
     private String trying;
     private String URL;
 
-    public data(String follower, int totalRepo, int total, String trying, String URL)
+    public data(String follower, String totalRepo, String total, String trying, String URL)
     {
         super();
         this.follower = follower;
@@ -26,19 +26,19 @@ public class data {
         this.follower = follower;
     }
 
-    public int getColumn2() {
+    public String getColumn2() {
         return totalRepo;
     }
 
-    public void setColumn2(int totalRepo) {
+    public void setColumn2(String totalRepo) {
         this.totalRepo = totalRepo;
     }
 
-    public int getColumn3() {
+    public String getColumn3() {
         return total;
     }
 
-    public void setColumn3(int total) {
+    public void setColumn3(String total) {
         this.total = total;
     }
 

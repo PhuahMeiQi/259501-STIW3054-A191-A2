@@ -62,7 +62,7 @@ public class saveToExcel {
                 r++;
             }
             //Auto Adjust Width
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 6; i++)
                 sheet.autoSizeColumn(i);
 
             //Save to Excel FILE
