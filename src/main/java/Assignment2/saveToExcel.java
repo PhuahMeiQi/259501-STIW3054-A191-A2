@@ -21,11 +21,11 @@ public class saveToExcel {
 
             //Create Heading
             Row rowHeading = sheet.createRow(0);
-            rowHeading.createCell(0).setCellValue("follower");
-            rowHeading.createCell(1).setCellValue("totalRepo");
-            rowHeading.createCell(2).setCellValue("total");
-            rowHeading.createCell(3).setCellValue("trying");
-            rowHeading.createCell(4).setCellValue("URL");
+            rowHeading.createCell(0).setCellValue("Follower Name");
+            rowHeading.createCell(1).setCellValue("Total Repo");
+            rowHeading.createCell(2).setCellValue("Total Follower");
+            rowHeading.createCell(3).setCellValue("Total Following");
+            rowHeading.createCell(4).setCellValue("GitHub Link");
 
             //1st Row Font Size
             for (int i = 0; i <= 4; i++) {
