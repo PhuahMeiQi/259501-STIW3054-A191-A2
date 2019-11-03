@@ -26,7 +26,7 @@ public class scrapeGitHub {
         InputStream inputStream = new URL(url).openStream();
         try {
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
-            System.out.printf("| %-5s| %-20s| %-20s| %-20s| %-20s| %-20s\n","No","Follower Name","Total Repo","Total Follower","Total Following","GitHub Link");
+            System.out.printf("| %-5s| %-30s| %-20s| %-20s| %-20s| %-20s\n","T_No","Follower Name","Total Repo","Total Follower","Total Following","GitHub Link");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String text = full(reader);
