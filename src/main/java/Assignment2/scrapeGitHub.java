@@ -83,8 +83,8 @@ public class scrapeGitHub {
 
             Thread thread = new Thread(() -> {
                 //System.out.println("t-"+Thread.currentThread().getId()+" "+login + " " + t_Repo + " " + t_Followers + " " + t_Following + " " + githubLink);
-                System.out.printf("| %-5s",Thread.currentThread().getId()+"\n");
-                System.out.printf("| %-30s",login);
+                System.out.printf("| %-5s",Thread.currentThread().getId());
+                System.out.printf("| %-20s",login);
                 System.out.printf("| %-20s",t_Repo);
                 System.out.printf("| %-20s",t_Followers);
                 System.out.printf("| %-20s",t_Following);
