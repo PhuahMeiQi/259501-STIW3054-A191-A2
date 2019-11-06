@@ -26,7 +26,7 @@ public class scrapeGitHub {
         InputStream inputStream = new URL(url).openStream();
         try {
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
-            System.out.printf("| %-5s| %-30s| %-20s| %-20s| %-20s| %-20s\n","T_No","Follower Name","Total Repo","Total Follower","Total Following","GitHub Link");
+            System.out.printf("| %-5s| %-15s| %-15s| %-15s| %-15s| %-15s\n","No.","Login ID","Number of Repositories","Number of Followers","Number of Following","GitHub Link");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------");
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             String text = full(reader);
@@ -51,28 +51,18 @@ public class scrapeGitHub {
     }
 
     public static LinkedList<data> findAll() throws IOException, JSONException {
-        int total = 0;
-        int totalRepo = 0;
-        String trying = null;
+
         LinkedList<data> data = new LinkedList<data>();
 
-        JSONArray jsonArray = readUrl("https://api.github.com/users/zhamri/followers");
+        JSONArray jsonArray = readUrl("https://api.github.com/users/zhamri/followers?access_token=3d1ca6930b12cb3704d6d6712a759300b0d0eb06");
 
-        int length = 0;
-
-        if(jsonArray.length() > 30){
-             length = 30;
-        }else {
-            length = jsonArray.length();
-        }
-
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
 
             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
             String link = jsonObject.optString("url");
 
-            JSONObject jsonObject1 = readOneUrl(link);
+            JSONObject jsonObject1 = readOneUrl(link+"?access_token=3d1ca6930b12cb3704d6d6712a759300b0d0eb06");
 
 
             String login = jsonObject1.optString("login");
@@ -82,16 +72,16 @@ public class scrapeGitHub {
             String githubLink = jsonObject1.optString("html_url");
 
             Thread thread = new Thread(() -> {
-                //System.out.println("t-"+Thread.currentThread().getId()+" "+login + " " + t_Repo + " " + t_Followers + " " + t_Following + " " + githubLink);
-                System.out.printf("| %-5s",Thread.currentThread().getId());
-                System.out.printf("| %-20s",login);
-                System.out.printf("| %-20s",t_Repo);
-                System.out.printf("| %-20s",t_Followers);
-                System.out.printf("| %-20s",t_Following);
+                System.out.printf("| %-5s",Thread.currentThread().getName());
+                System.out.printf("| %-15s",login);
+                System.out.printf("| %-22s",t_Repo);
+                System.out.printf("| %-19s",t_Followers);
+                System.out.printf("| %-19s",t_Following);
                 System.out.printf("| %-20s",githubLink+"\n");
                 data.add(new data(login, t_Repo, t_Followers, t_Following, githubLink));
             });
 
+            thread.setName(String.valueOf(i+1));
             thread.start();
 
             try {
