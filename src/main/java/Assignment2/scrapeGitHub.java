@@ -72,6 +72,7 @@ public class scrapeGitHub {
             String githubLink = jsonObject1.optString("html_url");
 
             Thread thread = new Thread(() -> {
+                //System.out.println("t-"+Thread.currentThread().getId()+" "+login + " " + t_Repo + " " + t_Followers + " " + t_Following + " " + githubLink);
                 System.out.printf("| %-5s",Thread.currentThread().getName());
                 System.out.printf("| %-15s",login);
                 System.out.printf("| %-22s",t_Repo);
